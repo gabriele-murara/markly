@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markly"
+dynamic = ["version"]
+description = "Lettore Markdown standalone per Linux"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Gabriele Murara" }]
+requires-python = ">=3.10"
+dependencies = [
+    "PySide6>=6.5",
+    "markdown-it-py>=3.0",
+    "mdit-py-plugins>=0.4",
+    "linkify-it-py>=2.0",
+    "nh3>=0.2.14",
+    "Pygments>=2.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pyinstaller>=6"]
+
+[project.scripts]
+markly = "markly.app:main"
+
+[tool.setuptools]
+packages = ["markly"]
+
+[tool.setuptools.dynamic]
+version = { file = ".version" }
+
+[tool.setuptools.package-data]
+markly = ["style.css"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

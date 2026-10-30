@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=markly
+GenericName=Lettore Markdown
+Comment=Visualizza documenti Markdown
+Exec=markly %f
+Icon=text-markdown
+Terminal=false
+Categories=Office;Viewer;
+MimeType=text/markdown;text/x-markdown;

@@ -1,0 +1,22 @@
+# Ambiente virtuale
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Build (setuptools e PyInstaller)
+build/
+dist/
+
+# Editor e IDE
+.idea/
+.vscode/
+*.swp
+*~
+
+# Sistema
+.DS_Store
