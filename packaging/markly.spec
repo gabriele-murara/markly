@@ -28,8 +28,14 @@ KEEP_PLUGIN_DIRS = {
 }
 DROP_PLUGINS = {
     "libqgtk3.so",  # tema GTK: porterebbe con sé tutta GTK 3
+    "libqpdf.so",  # PDF come formato immagine: porterebbe con sé QtPdf
     "libqtvirtualkeyboardplugin.so", "libqvnc.so", "libqlinuxfb.so", "libqeglfs.so",
     "libqminimal.so", "libqminimalegl.so", "libqvkkhrdisplay.so",
+}
+# Binding Python effettivamente importati da markly (gli altri sono solo dipendenze di hook).
+PYSIDE_MODULES = {
+    "QtCore", "QtGui", "QtWidgets", "QtNetwork", "QtPrintSupport",
+    "QtWebChannel", "QtWebEngineCore", "QtWebEngineWidgets",
 }
 # Traduzioni: solo italiano e inglese.
 KEEP_LOCALES = {"it.pak", "en-US.pak"}
@@ -37,6 +43,8 @@ KEEP_LOCALES = {"it.pak", "en-US.pak"}
 
 def keep_file(dest):
     path = PurePosixPath(dest)
+    if path.parent.name == "PySide6" and path.name.endswith(".abi3.so"):
+        return path.name.split(".")[0] in PYSIDE_MODULES
     if dest.startswith(QT + "qml/"):
         return False
     if dest.startswith(QT + "plugins/"):
