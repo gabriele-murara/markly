@@ -31,6 +31,7 @@ markly --version        # mostra la versione ed esce
 |---|---|
 | Aprire un documento | **File → Apri…** oppure **Ctrl+O** |
 | Uscire | **File → Esci** oppure **Ctrl+Q** |
+| Versione e autore | **Aiuto → Informazioni su markly** |
 | Copiare il testo | selezione con il mouse, poi **Ctrl+C** o menu contestuale → Copia |
 | Selezionare tutto | **Ctrl+A** o menu contestuale → Seleziona tutto |
 | Cercare nel documento | **Ctrl+F**; **Invio** / **Maiusc+Invio** per la corrispondenza successiva / precedente; **Esc** o un clic nel documento per chiudere |
@@ -168,7 +169,7 @@ schema interno markly:  →  Qt WebEngine (JS disattivato, rete bloccata)
    funzionano come se la pagina fosse accanto al file. Lo schema restituisce solo il documento
    corrente e i file immagine locali, mai altri file.
 
-La finestra (`markly/app.py`) contiene soltanto il menu **File**, la vista del documento e
+La finestra (`markly/app.py`) contiene soltanto i menu **File** e **Aiuto**, la vista del documento e
 la barra di ricerca, nascosta finché non si preme Ctrl+F.
 La versione è scritta solo nel file `.version` nella radice del progetto: la legge
 `markly --version` e, in fase di installazione, anche `pyproject.toml`.

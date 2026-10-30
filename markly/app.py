@@ -154,6 +154,10 @@ class MainWindow(QMainWindow):
         file_menu.addAction(open_action)
         file_menu.addSeparator()
         file_menu.addAction(quit_action)
+        about_action = QAction("&Informazioni su markly", self)
+        about_action.triggered.connect(self.show_about)
+        help_menu = self.menuBar().addMenu("&Aiuto")
+        help_menu.addAction(about_action)
 
         self.resize(980, 1000)
         self._update_title()
@@ -183,6 +187,20 @@ class MainWindow(QMainWindow):
         self._find_bar.close_bar()
         self._update_title()
         return True
+
+    def show_about(self) -> None:
+        try:
+            version = read_version()
+        except RuntimeError:
+            version = "non disponibile"
+        QMessageBox.about(
+            self,
+            f"Informazioni su {APP_NAME}",
+            f"<h3>{APP_NAME}</h3>"
+            f"<p>Versione {version}</p>"
+            "<p>Lettore Markdown per Linux.</p>"
+            "<p>© 2026 Gabriele Murara<br>Licenza MIT</p>",
+        )
 
     def _update_title(self) -> None:
         self.setWindowTitle(f"{self._path.name} — {APP_NAME}" if self._path else APP_NAME)
