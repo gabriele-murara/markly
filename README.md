@@ -8,6 +8,17 @@ ha schede, progetti, plugin o funzioni accessorie. La priorità è mostrare corr
 qualsiasi documento Markdown esistente, compresi quelli scritti anni fa con varianti
 diverse da CommonMark.
 
+## Installazione (Lubuntu / Ubuntu 24.04)
+
+```bash
+sudo make deps        # pacchetti di sistema, una volta sola
+make                  # ambiente virtuale, test e bundle in dist/markly/
+sudo make install     # installa in /usr/local, con voce nel menu delle applicazioni
+```
+
+Per installare solo per il proprio utente, senza sudo: `make install PREFIX=$HOME/.local`.
+Si disinstalla con `sudo make uninstall` (oppure con lo stesso `PREFIX` usato per installare).
+
 ## Uso
 
 ```bash
