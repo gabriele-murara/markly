@@ -1,0 +1,12 @@
+Package: markly
+Version: @VERSION@
+Architecture: amd64
+Maintainer: Gabriele Murara <gabriele@murara.computer>
+Installed-Size: @SIZE@
+Depends: libc6 (>= 2.39), libnss3, libdrm2, libegl1, libgl1, libxcb1, libxcb-dri3-0, libwayland-client0, libwayland-cursor0, libwayland-egl1
+Section: text
+Priority: optional
+Description: Lettore Markdown standalone per Linux
+ markly apre un documento Markdown e lo mostra formattato, in sola lettura.
+ Supporta CommonMark, le estensioni più diffuse e le varianti più vecchie,
+ e ripulisce l'HTML incorporato prima di mostrarlo.

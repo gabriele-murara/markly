@@ -19,6 +19,10 @@ sudo make install     # installa in /usr/local, con voce nel menu delle applicaz
 Per installare solo per il proprio utente, senza sudo: `make install PREFIX=$HOME/.local`.
 Si disinstalla con `sudo make uninstall` (oppure con lo stesso `PREFIX` usato per installare).
 
+In alternativa, `make deb` crea il pacchetto `dist/markly_<versione>_amd64.deb`, che si
+installa con `sudo apt install ./dist/markly_<versione>_amd64.deb` e si rimuove con
+`sudo apt remove markly`.
+
 ## Uso
 
 ```bash
