@@ -24,10 +24,18 @@ DEB_VERSION = $(shell sed 's/-/~/g' .version)
 DEB_ROOT    = build/deb
 DEB         = dist/markly_$(DEB_VERSION)_amd64.deb
 
-# Python 3.12, venv, librerie richieste dal plugin xcb di Qt 6 e binutils per PyInstaller.
+# Python 3.12, venv, binutils per PyInstaller e librerie di sistema usate da Qt 6 e
+# Qt WebEngine (OpenGL/EGL, X11/xcb, Wayland, font, D-Bus): sui sistemi minimali, come i
+# runner della CI, non sono preinstallate.
 APT_PACKAGES = python3 python3-venv python3-pip binutils \
-               libxcb-cursor0 libxkbcommon-x11-0 libxcb-icccm4 libxcb-keysyms1 \
-               libxcb-shape0 libxcb-xinerama0 libnss3 libasound2t64
+               libegl1 libgl1 libgbm1 libdrm2 libfontconfig1 libfreetype6 \
+               libdbus-1-3 libglib2.0-0t64 libnss3 libnspr4 libasound2t64 \
+               libxkbcommon0 libxkbcommon-x11-0 libx11-6 libx11-xcb1 libxext6 \
+               libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libxrender1 \
+               libxtst6 libxkbfile1 libxcb1 libxcb-cursor0 libxcb-dri3-0 \
+               libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
+               libxcb-render-util0 libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 \
+               libwayland-client0 libwayland-cursor0
 
 .PHONY: all deps venv test bundle deb install uninstall clean distclean help
 
