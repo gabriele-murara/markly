@@ -34,6 +34,7 @@ markly --version        # mostra la versione ed esce
 | Azione | Come |
 |---|---|
 | Aprire un documento | **File → Apri…** oppure **Ctrl+O** |
+| Ricaricare il documento da disco | **F5** |
 | Uscire | **File → Esci** oppure **Ctrl+Q** |
 | Versione e autore | **Aiuto → Informazioni su markly** |
 | Copiare il testo | selezione con il mouse, poi **Ctrl+C** o menu contestuale → Copia |

@@ -143,6 +143,10 @@ class MainWindow(QMainWindow):
         find_action.setShortcut(QKeySequence.StandardKey.Find)
         find_action.triggered.connect(self._find_bar.open_bar)
         self.addAction(find_action)
+        reload_action = QAction(self)
+        reload_action.setShortcut(QKeySequence(Qt.Key.Key_F5))
+        reload_action.triggered.connect(self.reload_file)
+        self.addAction(reload_action)
 
         open_action = QAction("&Apri…", self)
         open_action.setShortcut(QKeySequence.StandardKey.Open)
@@ -187,6 +191,11 @@ class MainWindow(QMainWindow):
         self._find_bar.close_bar()
         self._update_title()
         return True
+
+    def reload_file(self) -> None:
+        """Rilegge da disco il documento aperto."""
+        if self._path:
+            self.open_file(self._path)
 
     def show_about(self) -> None:
         try:
