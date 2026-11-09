@@ -1,0 +1,45 @@
+# A ogni tag v<versione>: test, pacchetto .deb e Release su GitHub con il .deb allegato.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write   # necessario per creare la Release e caricare il .deb
+
+jobs:
+  deb:
+    # Il pacchetto dichiara libc6 >= 2.39 e il Makefile installa le dipendenze di Ubuntu 24.04.
+    runs-on: ubuntu-24.04
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Controllo tag e .version
+        run: |
+          version="$(tr -d '[:space:]' < .version)"
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::Il tag $GITHUB_REF_NAME non corrisponde a .version ($version): atteso v$version"
+            exit 1
+          fi
+
+      - name: Dipendenze di sistema
+        run: sudo make deps
+
+      - name: Test
+        run: make test
+
+      - name: Pacchetto .deb
+        run: make deb
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/*.deb --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/*.deb --title "markly ${GITHUB_REF_NAME#v}" --generate-notes
+          fi
