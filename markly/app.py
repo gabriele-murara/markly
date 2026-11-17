@@ -34,6 +34,8 @@ _FILE_FILTER = (
     + " ".join(f"*{ext}" for ext in MARKDOWN_EXTENSIONS)
     + ");;Tutti i file (*)"
 )
+# Limiti di zoom ammessi da Qt WebEngine.
+_ZOOM_MIN, _ZOOM_MAX, _ZOOM_STEP = 0.25, 5.0, 0.1
 
 
 class ReaderView(QWebEngineView):
@@ -147,6 +149,21 @@ class MainWindow(QMainWindow):
         reload_action.setShortcut(QKeySequence(Qt.Key.Key_F5))
         reload_action.triggered.connect(self.reload_file)
         self.addAction(reload_action)
+        zoom_in_action = QAction(self)
+        zoom_in_action.setShortcuts([QKeySequence("Ctrl++"), QKeySequence("Ctrl+=")])
+        zoom_in_action.triggered.connect(lambda: self.zoom(_ZOOM_STEP))
+        self.addAction(zoom_in_action)
+        zoom_out_action = QAction(self)
+        zoom_out_action.setShortcut(QKeySequence("Ctrl+-"))
+        zoom_out_action.triggered.connect(lambda: self.zoom(-_ZOOM_STEP))
+        self.addAction(zoom_out_action)
+        zoom_reset_action = QAction(self)
+        zoom_reset_action.setShortcut(QKeySequence("Ctrl+0"))
+        zoom_reset_action.triggered.connect(lambda: self.zoom(1.0 - self._zoom))
+        self.addAction(zoom_reset_action)
+        # Lo zoom resta lo stesso anche aprendo o ricaricando un documento.
+        self._zoom = 1.0
+        self._page.loadFinished.connect(lambda _ok: self._view.setZoomFactor(self._zoom))
 
         open_action = QAction("&Apri…", self)
         open_action.setShortcut(QKeySequence.StandardKey.Open)
@@ -196,6 +213,11 @@ class MainWindow(QMainWindow):
         """Rilegge da disco il documento aperto."""
         if self._path:
             self.open_file(self._path)
+
+    def zoom(self, delta: float) -> None:
+        """Ingrandisce (delta > 0) o riduce il documento."""
+        self._zoom = round(min(_ZOOM_MAX, max(_ZOOM_MIN, self._zoom + delta)), 2)
+        self._view.setZoomFactor(self._zoom)
 
     def show_about(self) -> None:
         try:
